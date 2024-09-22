@@ -1,0 +1,38 @@
+#################### THIS COMPOSE FILE
+# - Docker version xxxxxx
+
+#################### ENV VARIABLES NEEDED
+
+# MYHOME_DIR - should point to root of myHome (i.e. /share/data)
+# MYHOME_CONFIG_DIR = $MYHOMEDIR/config
+# MYHOME_LABS_DIR = $MYHOMEDIR/labs
+# MYHOME_LIBRARY_DIR = $MYHOMEDIR/library
+# MYHOME_MEDIA_DIR = $MYHOMEDIR/media
+# MYHOME_SECRETS_DIR = $MYHOMEDIR/secrets
+# PUID
+# PGID
+
+#################### NETWORKS
+networks:
+  default:
+    driver: bridge
+  dockervlan:
+    name: dockervlan
+    driver: macvlan
+    driver_opts:
+      parent: eth0
+    ipam:
+      config:
+        - subnet: "192.168.4.0/24"
+          iprange: "192.168.4.226/32"
+          gateway: "192.168.4.1"
+
+#################### SECRETS
+secrets:
+  plex_claim:
+    file: $MYHOME_SECRETS_DIR/plex_claim
+
+#################### SERVICES
+include:
+ - compose/plex.yml
+ - compose/vscodium.yml
