@@ -2,23 +2,35 @@
 Container repository for all the tools I use in my home
 
 To start everything...
+
     - docker compose -f docker-compose-blackbombe.yml --profile all up -d
+    
 To stop everything...
+
     - docker compose -f docker-compose-blackbombe.yml --profile all down
 
 To start Plex
+
     - docker compose -f docker-compose-blackbombe.yml --profile media up -d
+    
 To stop Plex
+
     - docker compose -f docker-compose-blackbombe.yml --profile media down
 
 To start the DVR bundle
+
     - docker compose -f docker-compose-blackbombe.yml --profile dvr up -d
+    
 To stop DVR bundle
+
     - docker compose -f docker-compose-blackbombe.yml --profile dvr down
 
 To start Paperless library
+
     - docker compose -f docker-compose-blackbombe.yml --profile library up -d
+    
 To stop Paperless library
+
     - docker compose -f docker-compose-blackbombe.yml --profile library down
 
 ## To Use...
