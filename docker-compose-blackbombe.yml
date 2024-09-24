@@ -24,7 +24,6 @@ networks:
     ipam:
       config:
         - subnet: "192.168.4.0/24"
-          iprange: "192.168.4.226/32"
           gateway: "192.168.4.1"
 
 #################### SECRETS
@@ -34,5 +33,16 @@ secrets:
 
 #################### SERVICES
 include:
+# media
  - compose/plex.yml
- - compose/vscodium.yml
+ - compose/tautulli.yml
+# labs
+ - docker/dev-env/dev-env.yml
+# dvr
+ - compose/jacket.yml
+ - compose/qbittorrent.yml
+ - compose/radarr.yml
+ - compose/sonarr.yml
+# library
+ - compose/paperless-ngx.yml
+  

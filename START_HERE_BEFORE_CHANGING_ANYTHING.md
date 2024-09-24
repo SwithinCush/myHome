@@ -42,11 +42,13 @@ To stop Paperless library
 ```
 myhome/
   |- compose/
+  |    |- defaults/
   |- docker/
   |- config/
   |- automation/ (files for home automation)
   |- library/ (media files for library)
   |- media/ (media files for plex/dvr)
+  |    |- dvr/
   |- labs/ (files/projects for development)
   |- secrets/ (docker secrets files for sensitive information)
   |- transcode/
@@ -72,6 +74,9 @@ This directory contains all of the data files created/used by the compose servic
 
 ###### media/
 This directory is where you have keep your media files. This directory can be a sub-dir, a symlink, or a directory of symlinks.
+
+###### media/dvr/
+This directory is where the drv system does its work. This directory is a sub of media to allow reduce the amount of copies from one disk to another when downloading and processing video files.
 
 ###### labs/
 This directory is where you keep your development projetcs.
