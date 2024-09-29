@@ -37,7 +37,7 @@ include:
  - compose/plex.yml
  - compose/tautulli.yml
 # labs
- - docker/dev-env/dev-env.yml
+ - docker/dev-env/docker-compose.yml
 # dvr
  - compose/jacket.yml
  - compose/qbittorrent.yml
