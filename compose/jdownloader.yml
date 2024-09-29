@@ -1,0 +1,8 @@
+services:
+  jdownloader:
+    image: jlesage/jdownloader-2
+    ports:
+      - "5800:5800"
+    volumes:
+      - MYHOME_DIR/config/jdownloader:/config:rw
+      - $MYHOME_DIR/media//share/data/downloads:/output:rw

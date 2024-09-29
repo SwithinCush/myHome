@@ -27,22 +27,63 @@ networks:
           gateway: "192.168.4.1"
 
 #################### SECRETS
-secrets:
-  plex_claim:
-    file: $MYHOME_SECRETS_DIR/plex_claim
+
 
 #################### SERVICES
-include:
-# media
- - compose/plex.yml
- - compose/tautulli.yml
-# labs
- - docker/dev-env/docker-compose.yml
-# dvr
- - compose/jacket.yml
- - compose/qbittorrent.yml
- - compose/radarr.yml
- - compose/sonarr.yml
-# library
- - compose/paperless-ngx.yml
-  
+#include:
+# - compose/vscodium.yml
+## Can't use include statement. QNAP Container app hasn't progressed to version 3 of docker compose.
+## We have to go old school and make a monolithic compose.
+
+services:
+
+# Plex - Media Server
+  plex:
+    image: plexinc/pms-docker:latest # Set specific: plexinc/pms-docker:1.40.2.8395-c67dce28e
+    container_name: plex
+    profiles: ["media", "all"]
+    network_mode: host # Change this to 'bridge' to define ports, example ports below
+    #ports:
+      #- 32400:32400/tcp
+      #- 8324:8324/tcp
+      #- 32469:32469/tcp
+      #- 1900:1900/udp
+      #- 32410:32410/udp
+      #- 32412:32412/udp
+      #- 32413:32413/udp
+      #- 32414:32414/udp
+    # Uncomment the devices section for tv tuners and intel gpus
+    #devices:
+      #- /dev/dvb:/dev/dvb # Uncomment this device for typical USB TV Tuner cards
+      #- /dev/dri:/dev/dri # Uncomment this to use intel GPUs for Hardware Transcoding
+    environment:
+      - PLEX_CLAIM=claim-P6bWYPs3UM6NK8pHY5RL # Uncomment this to setup Plex server, get your claim code from here - https://www.plex.tv/claim/
+      # Uncomment the lines below to use Nvidia GPUs for Hardware Transcoding
+      #- NVIDIA_VISIBLE_DEVICES=all
+      #- NVIDIA_DRIVER_CAPABILITIES=all
+    volumes:
+      - /etc/localtime:/etc/localtime:ro # Sync the container's time to the host's time
+      - $MYHOME_DIR/config/plexdata:/config # Plex server application data is stored in a folder called 'plexmediaserver' in the same directory as the docker-compose.yaml file
+      # Uncomment the lines below for each library,
+      # make sure the path on the left of the colon (:) exists on the host! `/mnt/tv`
+      - $MYHOME_DIR/media:/data
+      #- /mnt/transcode:/mnt/transcode
+    restart: unless-stopped
+
+  paperless-ngx:
+    image: lscr.io/linuxserver/paperless-ngx:latest
+    container_name: paperless-ngx
+    profiles: ["library", "all"]
+    environment:
+      - REDIS_URL= #optional
+    volumes:
+      - $MYHOME_DIR/config/paperless:/config
+      - $MYHOME_DIR/library:/data
+    ports:
+      - 8000:8000
+    restart: unless-stopped
+
+
+
+
+

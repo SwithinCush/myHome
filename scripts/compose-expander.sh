@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 
+### USE:
+# % compose_expander.sh expanded_compose_blackbombe.yml docker-compose-blackbombe.yml
+#
 import yaml
 import argparse
 import os
